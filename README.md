@@ -1,2 +1,2 @@
-# progkorny_beadando
-[WPF] EKE-TTK Programtervező informatikus - Programozási környezetek gy. beadandó
+# vbz_progkorny
+[WPF] EKE-TTK Programtervező informatika 3. félév - Programozási környezetek gy. beadandó

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PostDBModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+    <EntitySetMapping Name="Todos">
+      <EntityTypeMapping TypeName="PostDBModel.Todos">
+        <MappingFragment StoreEntitySet="Todos">
+          <ScalarProperty Name="todo_Created_At" ColumnName="todo_Created_At" />
+          <ScalarProperty Name="todo_Author" ColumnName="todo_Author" />
+          <ScalarProperty Name="todo_Body" ColumnName="todo_Body" />
+          <ScalarProperty Name="todo_Title" ColumnName="todo_Title" />
+          <ScalarProperty Name="todo_Id" ColumnName="todo_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
