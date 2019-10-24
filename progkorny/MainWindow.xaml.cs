@@ -29,9 +29,6 @@ namespace progkorny
         public MainWindow()
         {
             InitializeComponent();
-
-            colorsComboBox.ItemsSource = colors;
-            colorsComboBox.SelectedIndex = 0;
         }
 
         public void RefreshData()
@@ -41,11 +38,18 @@ namespace progkorny
             dataGrid.DataContext = dt;
         }
 
+        private void LoadColors()
+        {
+            colorsComboBox.ItemsSource = colors;
+            colorsComboBox.SelectedIndex = 0;
+        }
+
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             dt.Clear();
             TodoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
+            LoadColors();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -60,13 +64,6 @@ namespace progkorny
         {
             InsertTodo insertTodoWindow = new InsertTodo(this);
             insertTodoWindow.Show();
-        }
-
-        private void MetroWindow_GotFocus(object sender, RoutedEventArgs e)
-        {
-            dt.Clear();
-            TodoController.LoadTodos(dt);
-            dataGrid.DataContext = dt;
         }
 
         private void darkThemeToggle_Checked(object sender, RoutedEventArgs e)
@@ -109,15 +106,32 @@ namespace progkorny
             if(dataGrid.SelectedItem != null)
             {
                 DataRowView drv = dataGrid.SelectedItem as DataRowView;
+
                 string id = drv["todo_id"].ToString();
                 string title = drv["todo_title"].ToString();
                 string body = drv["todo_body"].ToString();
                 string author = drv["todo_author"].ToString();
                 string created_at = drv["todo_created_at"].ToString();
+
                 EditTodo editTodo = new EditTodo(this, id,title,body,author,created_at);
                 editTodo.Show();
             }
         }
 
+        private void ViewModeCalendar_Checked(object sender, RoutedEventArgs e)
+        {
+            dataGrid.Visibility = Visibility.Hidden;
+            calendar.Visibility = Visibility.Visible;
+            List<string> dates = TodoController.LoadDates();
+            foreach(string date in dates)
+            {
+                calendar.SelectedDates.Add(Convert.ToDateTime(date));
+            }
+        }
+
+        private void ViewModeCalendar_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

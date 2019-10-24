@@ -39,7 +39,7 @@ namespace progkorny
 
         public void ChangeColor(Colors color)
         {
-            var ThemeDictionary = Application.Current.Resources.MergedDictionaries[3];
+            var ColorDictionary = Application.Current.Resources.MergedDictionaries[3];
             Uri newColor;
 
             switch (color)
@@ -61,8 +61,8 @@ namespace progkorny
                     break;
             }
 
-            ThemeDictionary.MergedDictionaries.Clear();
-            ThemeDictionary.MergedDictionaries.Add(new ResourceDictionary() { Source = newColor });
+            ColorDictionary.MergedDictionaries.Clear();
+            ColorDictionary.MergedDictionaries.Add(new ResourceDictionary() { Source = newColor });
 
         }
     }

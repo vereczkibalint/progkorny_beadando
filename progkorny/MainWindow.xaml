@@ -14,15 +14,20 @@
                 <MenuItem Header="Todo">
                     <MenuItem Header="Új létrehozása" x:Name="createTodoMenuItem" Click="CreateTodoMenuItem_Click"></MenuItem>
                 </MenuItem>
+                <MenuItem Header="Nézet">
+                    <Controls:ToggleSwitch FontSize="12" FontWeight="Normal" x:Name="ViewModeCalendar" Content="Calendar mode" Checked="ViewModeCalendar_Checked" Unchecked="ViewModeCalendar_Unchecked" />
+                </MenuItem>
                 <MenuItem Header="Kinézet">
                     <Controls:ToggleSwitch FontSize="12" FontWeight="Normal" x:Name="darkThemeToggle" Content="Dark Theme" Checked="darkThemeToggle_Checked" Unchecked="DarkThemeToggle_Unchecked"/>
                     <ComboBox x:Name="colorsComboBox" ItemsSource="{Binding}" Width="150" SelectionChanged="ColorsComboBox_SelectionChanged"/>
                 </MenuItem>
                 <MenuItem Header="Kilépés" x:Name="exitButton" Click="ExitButton_Click"></MenuItem>
             </Menu>
-            <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" CanUserReorderColumns="False" MouseDoubleClick="EditTodo_Handler" IsReadOnly="True" DockPanel.Dock="Top" HorizontalContentAlignment="Center">
-                
-            </DataGrid>
+            <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" CanUserReorderColumns="False" MouseDoubleClick="EditTodo_Handler" IsReadOnly="True" DockPanel.Dock="Top" HorizontalContentAlignment="Center"/>
+            <Viewbox>
+                <Calendar x:Name="calendar" Visibility="Hidden" SelectionMode="MultipleRange">
+                </Calendar>
+            </Viewbox>
         </DockPanel>
     </Grid>
 </Controls:MetroWindow>

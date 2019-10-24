@@ -22,6 +22,7 @@ namespace progkorny
     public partial class InsertTodo : Window
     {
         private MainWindow parentWindow;
+
         public InsertTodo(MainWindow mwindow)
         {
             InitializeComponent();

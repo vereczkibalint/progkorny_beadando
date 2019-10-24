@@ -141,5 +141,39 @@ namespace progkorny
                 return 0;
             }
         }
+
+        public static List<string> LoadDates()
+        {
+            List<string> dates = new List<string>();
+            try
+            {
+                dbConn.Open();
+                string query = "SELECT * FROM [todos]";
+                command = new OleDbCommand(query, dbConn);
+                dataAdapter.SelectCommand = command;
+                int rowsAffected = dataAdapter.SelectCommand.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    using (OleDbDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            dates.Add(reader["todo_created_at"].ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("nincs dátum");
+                }
+
+                return dates;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba történt: " + ex.Message);
+                return dates;
+            }
+        }
     }
 }

@@ -10,18 +10,7 @@ namespace progkorny
     {
         public static bool IsEmptyOrNull(params string[] items)
         {
-            bool returnValue = false;
-
-            foreach (string item in items)
-            {
-                if(item == null || item == "")
-                {
-                    returnValue = true;
-                    break;
-                }
-            }
-
-            return returnValue;
+            return items.Any(x => x == null || x == "");
         }
     }
 }
