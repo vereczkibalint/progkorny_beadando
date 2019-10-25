@@ -23,9 +23,15 @@ namespace progkorny
     {
         private MainWindow parentWindow;
 
+        /// <summary>
+        /// InsertTodo window példányosítása
+        /// </summary>
+        /// <param name="mwindow">MainWindow objektum</param>
         public InsertTodo(MainWindow mwindow)
         {
             InitializeComponent();
+
+            // Osztály mezőjének értékbeállítása
             parentWindow = mwindow;
 
             // DatePicker custom formátum
@@ -34,17 +40,28 @@ namespace progkorny
             Thread.CurrentThread.CurrentCulture = ci;
         }
 
+        /// <summary>
+        /// Insert gombra lefutó metódus, amely kísérletet tesz a Todo beillesztésére az adatbázisba
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Todo adatai
             string title = txtBox_Title.Text;
             string body = txtBox_Body.Text;
             string author = txtBox_Author.Text;
             string created_at = dateCreatedAt.Text;
             
+            // Az insert kísérlete
             int insertResult = TodoController.InsertTodo(title,body,author,created_at);
+
+            // 0 - Sikertelen insert
+            // 1 - Sikeres insert
 
             if(insertResult == 1)
             {
+                // frissítjük a főablakon a DataGrid-et, hogy egyből lássuk az új Todo-t 
                 parentWindow.RefreshData();
                 this.Close();
             }

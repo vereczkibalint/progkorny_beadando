@@ -25,12 +25,16 @@ namespace progkorny
     {
         private DataTable dt = new DataTable();
         private List<string> colors = new List<string>() { "kék", "narancssárga", "lila", "barna" };
+        private List<string> dates = new List<string>();
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Kiüríti a DataGrid-et, lekéri az adatbázisból a Todo-kat, majd újra feltölti a DataGridet a kapott eredménnyel
+        /// </summary>
         public void RefreshData()
         {
             dt.Clear();
@@ -38,20 +42,35 @@ namespace progkorny
             dataGrid.DataContext = dt;
         }
 
+        /// <summary>
+        /// Feltölti a színválasztó ComboBox-ot a Nézet menüben, és kiválasztottra állítja a legelsőt
+        /// </summary>
         private void LoadColors()
         {
             colorsComboBox.ItemsSource = colors;
             colorsComboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// MainWindow Loaded metódusa, itt történik a Todo-k betöltése, DataGrid feltöltése, Színek és dátumok betöltése
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             dt.Clear();
             TodoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
+
             LoadColors();
+            LoadDates();
         }
 
+        /// <summary>
+        /// Kilépés gombra lefutó metódus, amely MessageBox-ban megerősítteti a kilépési szándékot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             if(MessageBox.Show("Biztosan kilépsz?", "Kilépés megerősítése", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -60,24 +79,52 @@ namespace progkorny
             }
         }
 
+        /// <summary>
+        /// Új Todo létrehozása, InsertTodo ablakot nyit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateTodoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             InsertTodo insertTodoWindow = new InsertTodo(this);
             insertTodoWindow.Show();
         }
 
+        /// <summary>
+        /// Sötét téma checked metódusa, ha lefut, a téma átvált BaseDark-ra
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void darkThemeToggle_Checked(object sender, RoutedEventArgs e)
         {
             ThemeController tc = new ThemeController();
             tc.ChangeTheme(Themes.DARK);
         }
 
+        /// <summary>
+        /// Sötét téma unchecked metódusa, ha lefut, a téma átvált BaseLight-ra
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DarkThemeToggle_Unchecked(object sender, RoutedEventArgs e)
         {
             ThemeController tc = new ThemeController();
             tc.ChangeTheme(Themes.LIGHT);
         }
 
+        /// <summary>
+        /// A Calendarhoz készült metódus, amely csak a dátumokat tölti be, hogy azok megjelenítődhessenek a naptáron
+        /// </summary>
+        private void LoadDates()
+        {
+            dates = TodoController.LoadDates();
+        }
+
+        /// <summary>
+        /// A színeket beállító ComboBox SelectionChanged metódusa, amely ha lefut, akkor a kiválasztott színűre vált az ablak témája
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ColorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ThemeController tc = new ThemeController();
@@ -101,11 +148,16 @@ namespace progkorny
             }
         }
 
+        /// <summary>
+        /// DataGridRow dupla klikk metódusa, mely kiszedi az adott sorból az értékeket és továbbadja azt az EditTodo ablaknak szerkesztésre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditTodo_Handler(object sender, MouseButtonEventArgs e)
         {
             if(dataGrid.SelectedItem != null)
             {
-                DataRowView drv = dataGrid.SelectedItem as DataRowView;
+                DataRowView drv = (DataRowView)dataGrid.SelectedItem;
 
                 string id = drv["todo_id"].ToString();
                 string title = drv["todo_title"].ToString();
@@ -113,25 +165,68 @@ namespace progkorny
                 string author = drv["todo_author"].ToString();
                 string created_at = drv["todo_created_at"].ToString();
 
-                EditTodo editTodo = new EditTodo(this, id,title,body,author,created_at);
+                EditTodo editTodo = new EditTodo(this,id,title,body,author,created_at);
                 editTodo.Show();
             }
         }
 
+        /// <summary>
+        /// Naptár nézet kapcsolója, ha lefut, akkor a DataGrid eltűnik, helyette megjelenik a naptár
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewModeCalendar_Checked(object sender, RoutedEventArgs e)
         {
             dataGrid.Visibility = Visibility.Hidden;
             calendar.Visibility = Visibility.Visible;
-            List<string> dates = TodoController.LoadDates();
-            foreach(string date in dates)
+            dates = TodoController.LoadDates();
+            foreach (string date in dates)
             {
-                calendar.SelectedDates.Add(Convert.ToDateTime(date));
+                calendar.SelectedDates.Add(DateTime.Parse(date));
             }
         }
 
+        /// <summary>
+        /// Naptár nézet kapcsolója, ha lefut, akkor a naptár eltűnik és megjelenítődik a DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewModeCalendar_Unchecked(object sender, RoutedEventArgs e)
         {
+            dataGrid.Visibility = Visibility.Visible;
+            calendar.Visibility = Visibility.Hidden;
+        }
 
+        /// <summary>
+        /// Naptár dátumválasztó metódusa, minden dátumválasztásnál újra be kell tölteni a dátumokat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Calendar senderCalendar = (Calendar)sender;
+            DateTime selectedDate = (DateTime)senderCalendar.SelectedDate;
+            calendar.SelectedDates.Add(selectedDate);
+
+            foreach (string date in dates)
+            {
+                calendar.SelectedDates.Add(DateTime.Parse(date));
+            }
+        }
+
+        /// <summary>
+        /// Adatok frissítése, újra betölti a dátumokat és hozzáadja azokat a naptárhoz, illetve a DataGrid-et is frissíti
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RefreshTodoMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoadDates();
+            foreach (string date in dates)
+            {
+                calendar.SelectedDates.Add(DateTime.Parse(date));
+            }
+            RefreshData();
         }
     }
 }

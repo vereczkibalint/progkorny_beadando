@@ -9,10 +9,11 @@
         mc:Ignorable="d"
         Title="TODO Application" Height="450" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DockPanel Width="600" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <DockPanel Width="600" HorizontalAlignment="Center">
             <Menu DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10 0 10 0">
                 <MenuItem Header="Todo">
-                    <MenuItem Header="Új létrehozása" x:Name="createTodoMenuItem" Click="CreateTodoMenuItem_Click"></MenuItem>
+                    <MenuItem Header="Új létrehozása" x:Name="createTodoMenuItem" Click="CreateTodoMenuItem_Click"/>
+                    <MenuItem Header="Adatok frissítése" x:Name="refreshTodoMenuItem" Click="RefreshTodoMenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Header="Nézet">
                     <Controls:ToggleSwitch FontSize="12" FontWeight="Normal" x:Name="ViewModeCalendar" Content="Calendar mode" Checked="ViewModeCalendar_Checked" Unchecked="ViewModeCalendar_Unchecked" />
@@ -24,8 +25,18 @@
                 <MenuItem Header="Kilépés" x:Name="exitButton" Click="ExitButton_Click"></MenuItem>
             </Menu>
             <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" CanUserReorderColumns="False" MouseDoubleClick="EditTodo_Handler" IsReadOnly="True" DockPanel.Dock="Top" HorizontalContentAlignment="Center"/>
-            <Viewbox>
-                <Calendar x:Name="calendar" Visibility="Hidden" SelectionMode="MultipleRange">
+            <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Calendar x:Name="calendar" Visibility="Hidden" SelectionMode="MultipleRange" SelectedDatesChanged="Calendar_SelectedDatesChanged">
+                    <Calendar.CalendarDayButtonStyle>
+                        <Style TargetType="CalendarDayButton">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected"  Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="Tomato"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Calendar.CalendarDayButtonStyle>
                 </Calendar>
             </Viewbox>
         </DockPanel>

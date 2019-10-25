@@ -17,12 +17,16 @@ namespace progkorny
         private static OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
         private static OleDbCommand command;
 
+        /// <summary>
+        /// Betölti az összes Todo-t az adatbázisból dátum szerinti csökkenő sorrendben
+        /// </summary>
+        /// <param name="dt">DataTable</param>
         public static void LoadTodos(DataTable dt)
         {
             try
             {
                 dbConn.Open();
-                string query = "SELECT * FROM [todos]";
+                string query = "SELECT * FROM [todos] ORDER BY todo_created_at DESC";
                 command = new OleDbCommand(query, dbConn);
                 dataAdapter.SelectCommand = command;
                 dataAdapter.SelectCommand.ExecuteNonQuery();
@@ -35,6 +39,14 @@ namespace progkorny
             }
         }
 
+        /// <summary>
+        /// Hozzáadja az adatbázishoz az új Todo-t, aminek adatai a paraméterekben érkeznek
+        /// </summary>
+        /// <param name="title">Todo Title</param>
+        /// <param name="body">Todo Body</param>
+        /// <param name="author">Todo Author</param>
+        /// <param name="created_at">Todo Created at</param>
+        /// <returns>int: 0 - Failed, 1 - Success</returns>
         public static int InsertTodo(string title, string body, string author, string created_at)
         {
             if(!TodoHelper.IsEmptyOrNull(title, body, author, created_at))
@@ -45,22 +57,21 @@ namespace progkorny
                     string query = "INSERT INTO [todos] (todo_title, todo_body, todo_author, todo_created_at) VALUES('" + title + "', '" + body + "','" + author + "', '" + created_at + "')";
                     command = new OleDbCommand(query, dbConn);
                     dataAdapter.InsertCommand = command;
+                    int result = dataAdapter.InsertCommand.ExecuteNonQuery();
+                    dbConn.Close();
 
-                    if (dataAdapter.InsertCommand.ExecuteNonQuery() == 1)
+                    if (result == 1)
                     {
-                        dbConn.Close();
                         return 1;
                     }
                     else
                     {
-                        dbConn.Close();
                         return 0;
                     }
                     
                 }
                 catch (Exception ex)
                 {
-                    dbConn.Close();
                     MessageBox.Show(ex.Message);
                     return 0;
                 }
@@ -71,6 +82,15 @@ namespace progkorny
             }
         }
 
+        /// <summary>
+        /// Frissíti a paraméterben kapott ID-jű Todo-t
+        /// </summary>
+        /// <param name="id">Todo ID</param>
+        /// <param name="title">Todo Title</param>
+        /// <param name="body">Todo Body</param>
+        /// <param name="author">Todo Author</param>
+        /// <param name="created_at">Todo Created at</param>
+        /// <returns>int: 0 - Failed, 1 - Success</returns>
         public static int UpdateTodo(string id, string title, string body, string author, string created_at)
         {
             if (!TodoHelper.IsEmptyOrNull(id, title, body, author, created_at))
@@ -81,15 +101,15 @@ namespace progkorny
                     string query = "UPDATE [todos] SET todo_title = '"+title+"', todo_body = '"+body+"', todo_author = '"+author+ "', todo_created_at = #" + created_at + "# WHERE todo_id = " + id;
                     command = new OleDbCommand(query, dbConn);
                     dataAdapter.UpdateCommand = command;
+                    int result = dataAdapter.UpdateCommand.ExecuteNonQuery();
+                    dbConn.Close();
 
-                    if (dataAdapter.UpdateCommand.ExecuteNonQuery() == 1)
+                    if (result == 1)
                     {
-                        dbConn.Close();
                         return 1;
                     }
                     else
                     {
-                        dbConn.Close();
                         return 0;
                     }
 
@@ -97,7 +117,6 @@ namespace progkorny
                 catch (Exception ex)
                 {
                     MessageBox.Show("Hiba történt: " + ex.Message);
-                    dbConn.Close();
                     return 0;
                 }
             }
@@ -107,6 +126,11 @@ namespace progkorny
             }
         }
 
+        /// <summary>
+        /// Törli a paraméterben kapott ID-jű Todo-t az adatbázisból
+        /// </summary>
+        /// <param name="id">Todo ID</param>
+        /// <returns>int: 0 - Failed, 1 - Success</returns>
         public static int DeleteTodo(string id)
         {
             if (!TodoHelper.IsEmptyOrNull(id))
@@ -117,15 +141,14 @@ namespace progkorny
                     string query = "DELETE FROM [todos] WHERE todo_id = " +id;
                     command = new OleDbCommand(query, dbConn);
                     dataAdapter.DeleteCommand = command;
-
-                    if (dataAdapter.DeleteCommand.ExecuteNonQuery() == 1)
+                    int result = dataAdapter.DeleteCommand.ExecuteNonQuery();
+                    dbConn.Close();
+                    if (result == 1)
                     {
-                        dbConn.Close();
                         return 1;
                     }
                     else
                     {
-                        dbConn.Close();
                         return 0;
                     }
 
@@ -142,31 +165,29 @@ namespace progkorny
             }
         }
 
+        /// <summary>
+        /// Betölti az összes létező Todo dátumát egy listába, amit a naptárnál tudunk betölteni
+        /// </summary>
+        /// <returns>List<string> dátumok</returns>
         public static List<string> LoadDates()
         {
             List<string> dates = new List<string>();
             try
             {
                 dbConn.Open();
-                string query = "SELECT * FROM [todos]";
-                command = new OleDbCommand(query, dbConn);
-                dataAdapter.SelectCommand = command;
-                int rowsAffected = dataAdapter.SelectCommand.ExecuteNonQuery();
-                if (rowsAffected > 0)
+                using (command = new OleDbCommand("SELECT todo_created_at FROM [todos]", dbConn))
                 {
                     using (OleDbDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            dates.Add(reader["todo_created_at"].ToString());
+                            DateTime date = reader.GetDateTime(0);
+                            string convertedDate = date.ToString("yyyy-MM-dd");
+                            dates.Add(convertedDate);
                         }
                     }
                 }
-                else
-                {
-                    MessageBox.Show("nincs dátum");
-                }
-
+                dbConn.Close();
                 return dates;
             }
             catch (Exception ex)
