@@ -9,12 +9,12 @@ progkorny
 none
 false
 DEBUG;TRACE
-C:\Users\Balint\source\repos\progkorny_master_push\progkorny\App.xaml
+C:\Users\Balint\source\repos\progkorny_master_push\progkorny\Views\App.xaml
 52011862360
 1-1825422158
-161206074277
+16756375500
 21672116399
 Views\EditTodo.xaml;Views\InsertTodo.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;Views\MainWindow.xaml;
 
-True
+False
 

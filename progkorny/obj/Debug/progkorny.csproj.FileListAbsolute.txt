@@ -74,7 +74,6 @@ C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Resources
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\EditTodo.g.cs
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\InsertTodo.g.cs
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\MainWindow.g.cs
-C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\App.g.cs
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny_Content.g.cs
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny_MarkupCompile.cache
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny_MarkupCompile.lref
@@ -94,7 +93,6 @@ C:\Users\Balint\source\repos\progkorny_master_push\progkorny\bin\Debug\EntityFra
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\bin\Debug\MahApps.Metro.pdb
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\bin\Debug\MahApps.Metro.xml
-C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\App.baml
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\EditTodo.baml
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\InsertTodo.baml
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\MainWindow.baml
@@ -103,3 +101,5 @@ C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny.csproj.GenerateResource.cache
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny.csproj.CoreCompileInputs.cache
 C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\progkorny.csproj.CopyComplete
+C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\App.g.cs
+C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\Views\App.baml
