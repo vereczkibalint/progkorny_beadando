@@ -1,0 +1,73 @@
+﻿<Controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:progkorny"
+        x:Class="progkorny.MainWindow"
+        mc:Ignorable="d"
+        Title="TODO Application" Height="450" Width="800" Loaded="MetroWindow_Loaded" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <Menu HorizontalAlignment="Left" Margin="10 0 10 0" Grid.Column="0" Grid.Row="0">
+            <MenuItem Header="Todo">
+                <MenuItem Header="Új létrehozása" x:Name="createTodoMenuItem" Click="CreateTodoMenuItem_Click"/>
+                <MenuItem Header="Adatok frissítése" x:Name="refreshTodoMenuItem" Click="RefreshTodoMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Nézet">
+                <Controls:ToggleSwitch FontSize="12" FontWeight="Normal" x:Name="ViewModeCalendar" Content="Calendar mode" Checked="ViewModeCalendar_Checked" Unchecked="ViewModeCalendar_Unchecked" />
+            </MenuItem>
+            <MenuItem Header="Kinézet">
+                <Controls:ToggleSwitch FontSize="12" FontWeight="Normal" x:Name="darkThemeToggle" Content="Dark Theme" Checked="darkThemeToggle_Checked" Unchecked="DarkThemeToggle_Unchecked"/>
+                <ComboBox SelectedValuePath="Content" x:Name="colorsComboBox" Width="150" SelectionChanged="ColorsComboBox_SelectionChanged">
+                    <ComboBoxItem>kék</ComboBoxItem>
+                    <ComboBoxItem>narancssárga</ComboBoxItem>
+                    <ComboBoxItem>lila</ComboBoxItem>
+                    <ComboBoxItem>barna</ComboBoxItem>
+                </ComboBox>
+            </MenuItem>
+            <MenuItem Header="Kilépés" x:Name="exitButton" Click="ExitButton_Click"></MenuItem>
+        </Menu>
+
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" CanUserReorderColumns="False" MouseDoubleClick="EditTodo_Handler" IsReadOnly="True" HorizontalContentAlignment="Center" Grid.Column="0" Grid.Row="1" ColumnWidth="*">
+            <!--<DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding todo_priority}" Value="important">
+                            <Setter Property="FontWeight" Value="DemiBold"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding todo_priority}" Value="urgent">
+                            <Setter Property="FontWeight" Value="ExtraBold"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>-->
+        </DataGrid>
+
+            <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">
+            <Calendar x:Name="calendar" Visibility="Hidden" SelectionMode="MultipleRange" SelectedDatesChanged="Calendar_SelectedDatesChanged">
+                <Calendar.CalendarDayButtonStyle>
+                    <Style TargetType="CalendarDayButton">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"  Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="Tomato"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Calendar.CalendarDayButtonStyle>
+            </Calendar>
+        </Viewbox>
+    </Grid>
+</Controls:MetroWindow>

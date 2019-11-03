@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Lenovo\source\repos\progkorny_beadando\progkorny\obj\Debug\
+C:\Users\Balint\source\repos\progkorny_master_push\progkorny\obj\Debug\
 progkorny
 none
 false
 DEBUG;TRACE
-C:\Users\Lenovo\source\repos\progkorny_beadando\progkorny\App.xaml
-51005910525
+C:\Users\Balint\source\repos\progkorny_master_push\progkorny\App.xaml
+52011862360
 1-1825422158
-1687998877
-21-1481687289
-EditTodo.xaml;InsertTodo.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;MainWindow.xaml;
+161206074277
+21672116399
+Views\EditTodo.xaml;Views\InsertTodo.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;Views\MainWindow.xaml;
 
 True
 

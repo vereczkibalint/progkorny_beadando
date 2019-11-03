@@ -1,0 +1,34 @@
+﻿<Window x:Class="progkorny.EditTodo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:progkorny"
+        mc:Ignorable="d"
+        Title="Edit a Todo" Height="450" Width="450"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <StackPanel Width="300">
+            <Label Content="Title"/>
+            <TextBox x:Name="txtBox_Title" Height="20"/>
+            
+            <Label Content="Body" />
+            <TextBox x:Name="txtBox_Body" Height="50"/>
+            
+            <Label Content="Author"/>
+            <TextBox x:Name="txtBox_Author" Height="20"/>
+            
+            <Label Content="Created at" />
+            <DatePicker Height="20" x:Name="dateCreatedAt"/>
+
+            <Label Content="Priority "/>
+            <ComboBox x:Name="cmbPriority" Height="20">
+                <ComboBoxItem>Normal</ComboBoxItem>
+                <ComboBoxItem>Important</ComboBoxItem>
+                <ComboBoxItem>Urgent</ComboBoxItem>
+            </ComboBox> 
+            <Button x:Name="updateBtn" Click="updateBtn_Click" Content="Update" Width="100" Margin="20"/>
+            <Button x:Name="deleteBtn" Click="DeleteBtn_Click" Content="Delete" Width="100" Margin="20" Background="#FF991818"/>
+        </StackPanel>
+    </Grid>
+</Window>
