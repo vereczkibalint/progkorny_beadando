@@ -24,8 +24,8 @@ namespace progkorny
     public partial class MainWindow : MetroWindow
     {
         private DataTable dt = new DataTable();
-        private List<string> colors = new List<string>() { "kék", "narancssárga", "lila", "barna" };
         private List<string> dates = new List<string>();
+        private ThemeController tc = new ThemeController();
 
         public MainWindow()
         {
@@ -40,16 +40,18 @@ namespace progkorny
             dt.Clear();
             TodoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
+
+            LoadDates();
         }
 
         /// <summary>
         /// Feltölti a színválasztó ComboBox-ot a Nézet menüben, és kiválasztottra állítja a legelsőt
         /// </summary>
-        private void LoadColors()
-        {
-            colorsComboBox.ItemsSource = colors;
-            colorsComboBox.SelectedIndex = 0;
-        }
+        //private void LoadColors()
+        //{
+        //    colorsComboBox.ItemsSource = colors;
+        //    colorsComboBox.SelectedIndex = 0;
+        //}
 
         /// <summary>
         /// MainWindow Loaded metódusa, itt történik a Todo-k betöltése, DataGrid feltöltése, Színek és dátumok betöltése
@@ -58,12 +60,7 @@ namespace progkorny
         /// <param name="e"></param>
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            dt.Clear();
-            TodoController.LoadTodos(dt);
-            dataGrid.DataContext = dt;
-
-            LoadColors();
-            LoadDates();
+            RefreshData();
         }
 
         /// <summary>
@@ -97,7 +94,6 @@ namespace progkorny
         /// <param name="e"></param>
         private void darkThemeToggle_Checked(object sender, RoutedEventArgs e)
         {
-            ThemeController tc = new ThemeController();
             tc.ChangeTheme(Themes.DARK);
         }
 
@@ -108,7 +104,6 @@ namespace progkorny
         /// <param name="e"></param>
         private void DarkThemeToggle_Unchecked(object sender, RoutedEventArgs e)
         {
-            ThemeController tc = new ThemeController();
             tc.ChangeTheme(Themes.LIGHT);
         }
 
@@ -127,8 +122,7 @@ namespace progkorny
         /// <param name="e"></param>
         private void ColorsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ThemeController tc = new ThemeController();
-            switch (colorsComboBox.SelectedValue)
+            switch (colorsComboBox.SelectedValue.ToString())
             {
                 case "kék":
                     tc.ChangeColor(Colors.KEK);
@@ -141,9 +135,6 @@ namespace progkorny
                     break;
                 case "barna":
                     tc.ChangeColor(Colors.BARNA);
-                    break;
-                default:
-                    tc.ChangeColor(Colors.KEK);
                     break;
             }
         }
@@ -164,8 +155,9 @@ namespace progkorny
                 string body = drv["todo_body"].ToString();
                 string author = drv["todo_author"].ToString();
                 string created_at = drv["todo_created_at"].ToString();
+                string priority = drv["todo_priority"].ToString();
 
-                EditTodo editTodo = new EditTodo(this,id,title,body,author,created_at);
+                EditTodo editTodo = new EditTodo(this,id,title,body,author,created_at,priority);
                 editTodo.Show();
             }
         }
@@ -179,7 +171,7 @@ namespace progkorny
         {
             dataGrid.Visibility = Visibility.Hidden;
             calendar.Visibility = Visibility.Visible;
-            dates = TodoController.LoadDates();
+            LoadDates();
             foreach (string date in dates)
             {
                 calendar.SelectedDates.Add(DateTime.Parse(date));
@@ -221,12 +213,11 @@ namespace progkorny
         /// <param name="e"></param>
         private void RefreshTodoMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            LoadDates();
+            RefreshData();
             foreach (string date in dates)
             {
                 calendar.SelectedDates.Add(DateTime.Parse(date));
             }
-            RefreshData();
         }
     }
 }

@@ -28,7 +28,8 @@ namespace progkorny
         private string todo_body;
         private string todo_author;
         private string todo_created_at;
-        
+        private string todo_priority;
+
         /// <summary>
         /// EditTodo window példányosítása
         /// </summary>
@@ -38,11 +39,12 @@ namespace progkorny
         /// <param name="body">Todo Body</param>
         /// <param name="author">Todo Author</param>
         /// <param name="created_at">Todo Created at</param>
-        public EditTodo(MainWindow mwindow, string id, string title, string body, string author, string created_at)
+        /// <param name="priority">Todo Priority</param>
+        public EditTodo(MainWindow mwindow, string id, string title, string body, string author, string created_at, string priority)
         {
             InitializeComponent();
 
-            // DatePicker dátum formátum módosítása YYYY.MM.DD -> YYYY - MM - DD
+            // DatePicker dátum formátum módosítása YYYY.MM.DD -> YYYY-MM-DD
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
             Thread.CurrentThread.CurrentCulture = ci;
@@ -54,12 +56,29 @@ namespace progkorny
             this.todo_body = body;
             this.todo_author = author;
             this.todo_created_at = created_at;
+            this.todo_priority = priority;
 
             // Az ablakon lévő TextBox-ok értékének beállítása
             txtBox_Title.Text = this.todo_title;
             txtBox_Body.Text = this.todo_body;
             txtBox_Author.Text = this.todo_author;
             dateCreatedAt.Text = this.todo_created_at;
+
+            switch (priority)
+            {
+                case "normal":
+                    cmbPriority.SelectedIndex = 0;
+                    break;
+                case "important":
+                    cmbPriority.SelectedIndex = 1;
+                    break;
+                case "urgent":
+                    cmbPriority.SelectedIndex = 2;
+                    break;
+                default:
+                    cmbPriority.SelectedIndex = 0;
+                    break;
+            }
         }
 
         /// <summary>
@@ -75,9 +94,10 @@ namespace progkorny
             string body = txtBox_Body.Text;
             string author = txtBox_Author.Text;
             string created_at = dateCreatedAt.Text;
+            string priority = cmbPriority.Text.ToLower();
             
             // Az Update kísérlete
-            int updateResult = TodoController.UpdateTodo(id, title,body,author,created_at);
+            int updateResult = TodoController.UpdateTodo(id,title,body,author,created_at,priority);
 
             // 0 - Sikertelen frissítés
             // 1 - Sikeres frissítés

@@ -21,6 +21,13 @@
             <Label Content="Created at" />
             <DatePicker Text="Date" Height="20" x:Name="dateCreatedAt"/>
 
+            <Label Content="Priority" />
+            <ComboBox x:Name="cmbPriority" SelectedIndex="0" SelectedValuePath="Content">
+                <ComboBoxItem>Normal</ComboBoxItem>
+                <ComboBoxItem>Important</ComboBoxItem>
+                <ComboBoxItem>Urgent</ComboBoxItem>
+            </ComboBox>
+
             <Button x:Name="insertBtn" Click="InsertBtn_Click" Content="Insert" Width="100" Margin="20"/>
         </StackPanel>
     </Grid>

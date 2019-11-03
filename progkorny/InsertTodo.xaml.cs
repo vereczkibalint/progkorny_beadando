@@ -52,9 +52,10 @@ namespace progkorny
             string body = txtBox_Body.Text;
             string author = txtBox_Author.Text;
             string created_at = dateCreatedAt.Text;
-            
+            string priority = cmbPriority.SelectedValue.ToString().ToLower();
+
             // Az insert kísérlete
-            int insertResult = TodoController.InsertTodo(title,body,author,created_at);
+            int insertResult = TodoController.InsertTodo(title,body,author,created_at,priority);
 
             // 0 - Sikertelen insert
             // 1 - Sikeres insert

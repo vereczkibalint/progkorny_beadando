@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using System.Data;
 using System.Threading;
+using Microsoft.Win32;
+using System.IO;
 
 namespace progkorny
 {
@@ -36,7 +38,6 @@ namespace progkorny
             }
             else
             {
-                // különben pedig a Light
                 newTheme = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml");
             }
 
