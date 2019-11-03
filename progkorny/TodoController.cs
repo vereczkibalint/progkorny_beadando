@@ -47,7 +47,7 @@ namespace progkorny
         /// <param name="author">Todo Author</param>
         /// <param name="priority">Todo Priority</param>
         /// <param name="created_at">Todo Created at</param>
-        /// <returns>int: 0 - Failed, 1 - Success</returns>
+        /// <returns>int: -1 - Failed, 1 - Success</returns>
         public static int InsertTodo(string title, string body, string author, string created_at, string priority)
         {
             if(!TodoHelper.IsEmptyOrNull(title, body, author, created_at, priority))
@@ -85,7 +85,7 @@ namespace progkorny
         /// <param name="author">Todo Author</param>
         /// <param name="created_at">Todo Created at</param>
         /// <param name="priority">Todo Priority</param>
-        /// <returns>int: 0 - Failed, 1 - Success</returns>
+        /// <returns>int: -1 - Failed, 1 - Success</returns>
         public static int UpdateTodo(string id, string title, string body, string author, string created_at, string priority)
         {
             if (!TodoHelper.IsEmptyOrNull(id, title, body, author, created_at, priority))
@@ -118,7 +118,7 @@ namespace progkorny
         /// Törli a paraméterben kapott ID-jű Todo-t az adatbázisból
         /// </summary>
         /// <param name="id">Todo ID</param>
-        /// <returns>int: 0 - Failed, 1 - Success</returns>
+        /// <returns>int: -1 - Failed, 1 - Success</returns>
         public static int DeleteTodo(string id)
         {
             if (!TodoHelper.IsEmptyOrNull(id))
