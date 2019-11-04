@@ -1,21 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using System.Data;
-using System.Threading;
-using Microsoft.Win32;
-using System.IO;
 
 namespace progkorny
 {
@@ -24,7 +8,7 @@ namespace progkorny
         /// <summary>
         /// Témaváltoztató metódus
         /// </summary>
-        /// <param name="theme">Téma enum</param>
+        /// <param name="theme">Theme enum</param>
         public void ChangeTheme(Themes theme)
         {
             // App.xaml -> ThemeDictionary
