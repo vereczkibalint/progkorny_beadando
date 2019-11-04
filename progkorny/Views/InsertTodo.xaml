@@ -18,8 +18,8 @@
             <Label Content="Author"/>
             <TextBox x:Name="txtBox_Author" Height="20"/>
             
-            <Label Content="Created at" />
-            <DatePicker Text="Date" Height="20" x:Name="dateCreatedAt"/>
+            <Label Content="Deadline" />
+            <DatePicker Text="Date" Height="20" x:Name="dateDeadline"/>
 
             <Label Content="Priority" />
             <ComboBox x:Name="cmbPriority" SelectedIndex="0" SelectedValuePath="Content">

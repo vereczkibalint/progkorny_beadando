@@ -22,6 +22,7 @@ namespace progkorny
     public partial class InsertTodo : Window
     {
         private MainWindow parentWindow;
+        private TodoController todoController;
 
         /// <summary>
         /// InsertTodo window példányosítása
@@ -32,6 +33,7 @@ namespace progkorny
             InitializeComponent();
 
             // Osztály mezőjének értékbeállítása
+            todoController = new TodoController();
             parentWindow = mwindow;
 
             // DatePicker custom formátum
@@ -51,12 +53,11 @@ namespace progkorny
             string title = txtBox_Title.Text;
             string body = txtBox_Body.Text;
             string author = txtBox_Author.Text;
-            string created_at = dateCreatedAt.Text;
+            string deadline = dateDeadline.Text;
             string priority = cmbPriority.SelectedValue.ToString().ToLower();
 
             // Az insert kísérlete
-            int insertResult = TodoController.InsertTodo(title,body,author,created_at,priority);
-
+            int insertResult = todoController.InsertTodo(title,body,author,deadline,priority);
             // 0 - Sikertelen insert
             // 1 - Sikeres insert
 

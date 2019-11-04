@@ -22,12 +22,13 @@ namespace progkorny
     public partial class EditTodo : Window
     {
         private MainWindow parentWindow;
+        private TodoController todoController;
 
         private string todo_id;
         private string todo_title;
         private string todo_body;
         private string todo_author;
-        private string todo_created_at;
+        private string todo_deadline;
         private string todo_priority;
 
         /// <summary>
@@ -40,10 +41,10 @@ namespace progkorny
         /// <param name="author">Todo Author</param>
         /// <param name="created_at">Todo Created at</param>
         /// <param name="priority">Todo Priority</param>
-        public EditTodo(MainWindow mwindow, string id, string title, string body, string author, string created_at, string priority)
+        public EditTodo(MainWindow mwindow, string id, string title, string body, string author, string deadline, string priority)
         {
             InitializeComponent();
-
+            todoController = new TodoController();
             // DatePicker dátum formátum módosítása YYYY.MM.DD -> YYYY-MM-DD
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
@@ -55,14 +56,14 @@ namespace progkorny
             this.todo_title = title;
             this.todo_body = body;
             this.todo_author = author;
-            this.todo_created_at = created_at;
+            this.todo_deadline = deadline;
             this.todo_priority = priority;
 
             // Az ablakon lévő TextBox-ok értékének beállítása
             txtBox_Title.Text = this.todo_title;
             txtBox_Body.Text = this.todo_body;
             txtBox_Author.Text = this.todo_author;
-            dateCreatedAt.Text = this.todo_created_at;
+            dateDeadline.Text = this.todo_deadline;
 
             switch (priority)
             {
@@ -93,11 +94,11 @@ namespace progkorny
             string title = txtBox_Title.Text;
             string body = txtBox_Body.Text;
             string author = txtBox_Author.Text;
-            string created_at = dateCreatedAt.Text;
+            string deadline = dateDeadline.Text;
             string priority = cmbPriority.Text.ToLower();
             
             // Az Update kísérlete
-            int updateResult = TodoController.UpdateTodo(id,title,body,author,created_at,priority);
+            int updateResult = todoController.UpdateTodo(id,title,body,author,deadline,priority);
 
             // 0 - Sikertelen frissítés
             // 1 - Sikeres frissítés
@@ -124,7 +125,7 @@ namespace progkorny
             if(MessageBox.Show("Biztosan ki szeretnéd törölni ezt a bejegyzést?", "Törlés megerősítése", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 // A törlés kísérlete
-                int deleteResult = TodoController.DeleteTodo(this.todo_id);
+                int deleteResult = todoController.DeleteTodo(this.todo_id);
 
                 // 0 - Sikertelen törlés
                 // 1 - Sikeres törlés

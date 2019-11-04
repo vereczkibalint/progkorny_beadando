@@ -23,13 +23,18 @@ namespace progkorny
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        private DataTable dt = new DataTable();
-        private List<string> dates = new List<string>();
-        private ThemeController tc = new ThemeController();
+        private DataTable dt;
+        private TodoController todoController;
+        private List<string> dates;
+        private ThemeController tc;
 
         public MainWindow()
         {
             InitializeComponent();
+            todoController = new TodoController();
+            dt = new DataTable();
+            dates = new List<string>();
+            tc = new ThemeController();
         }
 
         /// <summary>
@@ -38,12 +43,11 @@ namespace progkorny
         public void RefreshData()
         {
             dt.Clear();
-            TodoController.LoadTodos(dt);
+            todoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
-
             LoadDates();
         }
-
+        
         /// <summary>
         /// Feltölti a színválasztó ComboBox-ot a Nézet menüben, és kiválasztottra állítja a legelsőt
         /// </summary>
@@ -112,7 +116,7 @@ namespace progkorny
         /// </summary>
         private void LoadDates()
         {
-            dates = TodoController.LoadDates();
+            dates = todoController.LoadDates();
         }
 
         /// <summary>
@@ -154,10 +158,10 @@ namespace progkorny
                 string title = drv["todo_title"].ToString();
                 string body = drv["todo_body"].ToString();
                 string author = drv["todo_author"].ToString();
-                string created_at = drv["todo_created_at"].ToString();
+                string deadline = drv["todo_deadline"].ToString();
                 string priority = drv["todo_priority"].ToString();
 
-                EditTodo editTodo = new EditTodo(this,id,title,body,author,created_at,priority);
+                EditTodo editTodo = new EditTodo(this,id,title,body,author,deadline,priority);
                 editTodo.Show();
             }
         }
