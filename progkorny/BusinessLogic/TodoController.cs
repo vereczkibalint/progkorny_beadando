@@ -16,8 +16,7 @@ namespace progkorny
         /*private static OleDbConnection dbConn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Balint\source\repos\progkorny_beadando-master\progkorny\todo.accdb;Persist Security Info=True");
         private static OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
         private static OleDbCommand command;*/
-
-        private OleDbConnection dbConn;
+        
         private OleDbDataAdapter dataAdapter;
 
         /// <summary>
@@ -26,11 +25,13 @@ namespace progkorny
         /// <param name="dt">DataTable</param>
         public void LoadTodos(DataTable dt)
         {
+            OleDbConnection dbConn = OpenConnection();
             try
             {
+                dbConn.Open();
                 string query = "SELECT * FROM [todos] ORDER BY todo_deadline DESC, todo_priority DESC";
                 OleDbCommand command = new OleDbCommand(query, dbConn);
-                
+
                 dataAdapter.SelectCommand = command;
                 dataAdapter.SelectCommand.ExecuteNonQuery();
                 dataAdapter.Fill(dt);
@@ -38,6 +39,10 @@ namespace progkorny
             catch (Exception ex)
             {
                 MessageBox.Show("Hiba történt: " + ex.Message);
+            }
+            finally
+            {
+                dbConn.Close();
             }
         }
 
@@ -54,8 +59,10 @@ namespace progkorny
         {
             if(!TodoHelper.IsEmptyOrNull(title, body, author, deadline, priority))
             {
+                OleDbConnection dbConn = OpenConnection();
                 try
                 {
+                    dbConn.Open();
                     string query = "INSERT INTO [todos] (todo_title, todo_body, todo_author, todo_deadline, todo_priority) VALUES('" + title + "', '" + body + "','" + author + "', '" + deadline + "','" + priority + "')";
                     OleDbCommand command = new OleDbCommand(query, dbConn);
 
@@ -68,6 +75,10 @@ namespace progkorny
                 {
                     MessageBox.Show("Hiba: " + ex.Message);
                     return -1;
+                }
+                finally
+                {
+                    dbConn.Close();
                 }
             }
             else
@@ -91,8 +102,10 @@ namespace progkorny
         {
             if (!TodoHelper.IsEmptyOrNull(id, title, body, author, deadline, priority))
             {
+                OleDbConnection dbConn = OpenConnection();
                 try
                 {
+                    dbConn.Open();
                     string query = "UPDATE [todos] SET todo_title = '" + title + "', todo_body = '" + body + "', todo_author = '" + author + "', todo_deadline = #" + deadline + "#, todo_priority = '" + priority + "' WHERE todo_id = " + id;
                     OleDbCommand command = new OleDbCommand(query, dbConn);
 
@@ -105,6 +118,10 @@ namespace progkorny
                 {
                     MessageBox.Show("Hiba történt: " + ex.Message);
                     return -1;
+                }
+                finally
+                {
+                    dbConn.Close();
                 }
             }
             else
@@ -123,8 +140,11 @@ namespace progkorny
         {
             if (!TodoHelper.IsEmptyOrNull(id))
             {
+
+                OleDbConnection dbConn = OpenConnection();
                 try
                 {
+                    dbConn.Open();
                     string query = "DELETE FROM [todos] WHERE todo_id = " + id;
                     OleDbCommand command = new OleDbCommand(query, dbConn);
                     
@@ -137,6 +157,10 @@ namespace progkorny
                 {
                     MessageBox.Show("Hiba történt: " + ex.Message);
                     return -1;
+                }
+                finally
+                {
+                    dbConn.Close();
                 }
             }
             else
@@ -152,8 +176,11 @@ namespace progkorny
         public List<string> LoadDates()
         {
             List<string> dates = new List<string>();
+
+            OleDbConnection dbConn = OpenConnection();
             try
             {
+                dbConn.Open();
                 string query = "SELECT todo_deadline FROM[todos]";
 
                 using (OleDbCommand command = new OleDbCommand(query,dbConn))
@@ -175,12 +202,15 @@ namespace progkorny
                 MessageBox.Show("Hiba történt: " + ex.Message);
                 return dates;
             }
+            finally
+            {
+                dbConn.Close();
+            }
         }
 
         public TodoController()
         {
             dataAdapter = new OleDbDataAdapter();
-            dbConn = OpenConnection();
         }
     }
 }
