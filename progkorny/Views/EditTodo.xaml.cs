@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace progkorny
 {
@@ -34,7 +22,7 @@ namespace progkorny
         /// <param name="title">Todo Title</param>
         /// <param name="body">Todo Body</param>
         /// <param name="author">Todo Author</param>
-        /// <param name="created_at">Todo Created at</param>
+        /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
         public EditTodo(MainWindow mwindow, string id, string title, string body, string author, string deadline, string priority)
         {
@@ -90,7 +78,7 @@ namespace progkorny
             // Az Update kísérlete
             int updateResult = todoController.UpdateTodo(id,title,body,author,deadline,priority);
 
-            // 0 - Sikertelen frissítés
+            // -1 - Sikertelen frissítés
             // 1 - Sikeres frissítés
             if(updateResult == 1)
             {
@@ -117,7 +105,7 @@ namespace progkorny
                 // A törlés kísérlete
                 int deleteResult = todoController.DeleteTodo(this.todo_id);
 
-                // 0 - Sikertelen törlés
+                // -1 - Sikertelen törlés
                 // 1 - Sikeres törlés
                 if (deleteResult == 1)
                 {
