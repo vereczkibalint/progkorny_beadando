@@ -25,11 +25,6 @@ namespace progkorny
         private TodoController todoController;
 
         private string todo_id;
-        private string todo_title;
-        private string todo_body;
-        private string todo_author;
-        private string todo_deadline;
-        private string todo_priority;
 
         /// <summary>
         /// EditTodo window példányosítása
@@ -52,18 +47,13 @@ namespace progkorny
 
             // Osztály mezőinek érték beállítása
             parentWindow = mwindow;
-            this.todo_id = id;
-            this.todo_title = title;
-            this.todo_body = body;
-            this.todo_author = author;
-            this.todo_deadline = deadline;
-            this.todo_priority = priority;
+            todo_id = id;
 
             // Az ablakon lévő TextBox-ok értékének beállítása
-            txtBox_Title.Text = this.todo_title;
-            txtBox_Body.Text = this.todo_body;
-            txtBox_Author.Text = this.todo_author;
-            dateDeadline.Text = this.todo_deadline;
+            txtBox_Title.Text = title;
+            txtBox_Body.Text = body;
+            txtBox_Author.Text = author;
+            dateDeadline.Text = deadline;
 
             switch (priority)
             {
