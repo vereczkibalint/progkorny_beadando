@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.OleDb;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.OleDb;
 
 namespace progkorny
 {
     public class DatabaseConnection
     {
+        /// <summary>
+        /// Felépíti a kapcsolatot az adatbázissal
+        /// </summary>
+        /// <returns>OleDbConnection objektum</returns>
         public OleDbConnection OpenConnection()
         {
             OleDbConnection connection = new OleDbConnection();
