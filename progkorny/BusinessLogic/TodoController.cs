@@ -2,27 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace progkorny
 {
     public class TodoController : DatabaseConnection
-    {
-        /*private static OleDbConnection dbConn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Balint\source\repos\progkorny_beadando-master\progkorny\todo.accdb;Persist Security Info=True");
-        private static OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
-        private static OleDbCommand command;*/
-        
+    {       
         private OleDbDataAdapter dataAdapter;
 
         /// <summary>
-        /// Betölti az összes Todo-t az adatbázisból dátum szerinti csökkenő sorrendben
+        /// Betölti az összes Todo-t az adatbázisból dátum és sürgősség szerinti csökkenő sorrendben
         /// </summary>
-        /// <param name="dt">DataTable</param>
+        /// <param name="dt">Feltöltendő DataTable</param>
         public void LoadTodos(DataTable dt)
         {
             OleDbConnection dbConn = OpenConnection();
@@ -52,8 +43,8 @@ namespace progkorny
         /// <param name="title">Todo Title</param>
         /// <param name="body">Todo Body</param>
         /// <param name="author">Todo Author</param>
+        /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
-        /// <param name="created_at">Todo Created at</param>
         /// <returns>int: -1 - Failed, 1 - Success</returns>
         public int InsertTodo(string title, string body, string author, string deadline, string priority)
         {
@@ -95,7 +86,7 @@ namespace progkorny
         /// <param name="title">Todo Title</param>
         /// <param name="body">Todo Body</param>
         /// <param name="author">Todo Author</param>
-        /// <param name="created_at">Todo Created at</param>
+        /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
         /// <returns>int: -1 - Failed, 1 - Success</returns>
         public int UpdateTodo(string id, string title, string body, string author, string deadline, string priority)
@@ -140,7 +131,6 @@ namespace progkorny
         {
             if (!TodoHelper.IsEmptyOrNull(id))
             {
-
                 OleDbConnection dbConn = OpenConnection();
                 try
                 {
@@ -170,9 +160,9 @@ namespace progkorny
         }
 
         /// <summary>
-        /// Betölti az összes létező Todo dátumát egy listába, amit a naptárnál tudunk betölteni
+        /// Betölti az összes létező Todo dátumát egy listába, amit a naptárnál tölt be
         /// </summary>
-        /// <returns>List<string> dátumok</returns>
+        /// <returns>List<string> dátumok listája</returns>
         public List<string> LoadDates()
         {
             List<string> dates = new List<string>();
