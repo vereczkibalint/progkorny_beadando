@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
-using System.Data.OleDb;
 using System.Data;
-using System.Threading;
 
 namespace progkorny
 {
@@ -45,20 +35,12 @@ namespace progkorny
             dt.Clear();
             todoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
-            LoadDates();
+            //LoadDates();
+            dates = todoController.LoadDates();
         }
-        
-        /// <summary>
-        /// Feltölti a színválasztó ComboBox-ot a Nézet menüben, és kiválasztottra állítja a legelsőt
-        /// </summary>
-        //private void LoadColors()
-        //{
-        //    colorsComboBox.ItemsSource = colors;
-        //    colorsComboBox.SelectedIndex = 0;
-        //}
 
         /// <summary>
-        /// MainWindow Loaded metódusa, itt történik a Todo-k betöltése, DataGrid feltöltése, Színek és dátumok betöltése
+        /// MainWindow Loaded metódusa, itt történik a Todo-k betöltése, DataGrid feltöltése, dátumok betöltése
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -114,10 +96,10 @@ namespace progkorny
         /// <summary>
         /// A Calendarhoz készült metódus, amely csak a dátumokat tölti be, hogy azok megjelenítődhessenek a naptáron
         /// </summary>
-        private void LoadDates()
-        {
-            dates = todoController.LoadDates();
-        }
+        //private void LoadDates()
+        //{
+        //    dates = todoController.LoadDates();
+        //}
 
         /// <summary>
         /// A színeket beállító ComboBox SelectionChanged metódusa, amely ha lefut, akkor a kiválasztott színűre vált az ablak témája
@@ -175,7 +157,7 @@ namespace progkorny
         {
             dataGrid.Visibility = Visibility.Hidden;
             calendar.Visibility = Visibility.Visible;
-            LoadDates();
+            RefreshData();
             foreach (string date in dates)
             {
                 calendar.SelectedDates.Add(DateTime.Parse(date));
