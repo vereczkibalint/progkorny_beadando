@@ -10,7 +10,6 @@ namespace progkorny
     /// </summary>
     public partial class EditTodo : Window
     {
-        private MainWindow parentWindow;
         private TodoController todoController;
 
         private string todo_id;
@@ -25,7 +24,7 @@ namespace progkorny
         /// <param name="author">Todo Author</param>
         /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
-        public EditTodo(MainWindow mwindow, Todo todoToEdit)
+        public EditTodo(Todo todoToEdit)
         {
             InitializeComponent();
             todoController = new TodoController();
@@ -35,7 +34,6 @@ namespace progkorny
             Thread.CurrentThread.CurrentCulture = ci;
 
             // Osztály mezőinek érték beállítása
-            parentWindow = mwindow;
             todo_id = todoToEdit.Todo_ID;
 
             // Az ablakon lévő TextBox-ok értékének beállítása
@@ -85,8 +83,6 @@ namespace progkorny
             // 1 - Sikeres frissítés
             if(updateResult == 1)
             {
-                // frissítjük a főablakon a DataGrid-et, hogy egyből lássuk a frissített Todo-t
-                parentWindow.RefreshData(); 
                 this.Close();
             }
             else
@@ -112,8 +108,6 @@ namespace progkorny
                 // 1 - Sikeres törlés
                 if (deleteResult == 1)
                 {
-                    //  frissítjük a főablakon a DataGrid-et, hogy egyből lássuk a frissített Todo-t
-                    parentWindow.RefreshData();
                     this.Close();
                 }
                 else

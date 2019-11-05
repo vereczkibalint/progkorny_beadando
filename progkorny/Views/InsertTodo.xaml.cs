@@ -10,20 +10,18 @@ namespace progkorny
     /// </summary>
     public partial class InsertTodo : Window
     {
-        private MainWindow parentWindow;
         private TodoController todoController;
 
         /// <summary>
         /// InsertTodo window példányosítása
         /// </summary>
         /// <param name="mwindow">MainWindow objektum</param>
-        public InsertTodo(MainWindow mwindow)
+        public InsertTodo()
         {
             InitializeComponent();
 
             // Osztály mezőjének értékbeállítása
             todoController = new TodoController();
-            parentWindow = mwindow;
 
             // DatePicker custom formátum
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
@@ -53,8 +51,6 @@ namespace progkorny
 
             if(insertResult == 1)
             {
-                // frissítjük a főablakon a DataGrid-et, hogy egyből lássuk az új Todo-t 
-                parentWindow.RefreshData();
                 this.Close();
             }
             else

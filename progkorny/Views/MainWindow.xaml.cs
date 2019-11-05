@@ -35,7 +35,6 @@ namespace progkorny
             dt.Clear();
             todoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
-            //LoadDates();
             dates = todoController.LoadDates();
         }
 
@@ -45,6 +44,11 @@ namespace progkorny
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void Window_Closed_Refresh(object sender, EventArgs e)
         {
             RefreshData();
         }
@@ -69,8 +73,9 @@ namespace progkorny
         /// <param name="e"></param>
         private void CreateTodoMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            InsertTodo insertTodoWindow = new InsertTodo(this);
+            InsertTodo insertTodoWindow = new InsertTodo();
             insertTodoWindow.Show();
+            insertTodoWindow.Closed += Window_Closed_Refresh;
         }
 
         /// <summary>
@@ -144,8 +149,9 @@ namespace progkorny
                 todoToEdit.Todo_Deadline = drv["todo_deadline"].ToString();
                 todoToEdit.Todo_Priority = (Priority)Enum.Parse(typeof(Priority), drv["todo_priority"].ToString().ToUpper());
 
-                EditTodo editTodo = new EditTodo(this, todoToEdit);
+                EditTodo editTodo = new EditTodo(todoToEdit);
                 editTodo.Show();
+                editTodo.Closed += Window_Closed_Refresh;
             }
         }
 
