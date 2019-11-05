@@ -136,14 +136,15 @@ namespace progkorny
             {
                 DataRowView drv = (DataRowView)dataGrid.SelectedItem;
 
-                string id = drv["todo_id"].ToString();
-                string title = drv["todo_title"].ToString();
-                string body = drv["todo_body"].ToString();
-                string author = drv["todo_author"].ToString();
-                string deadline = drv["todo_deadline"].ToString();
-                string priority = drv["todo_priority"].ToString();
+                Todo todoToEdit = new Todo();
+                todoToEdit.Todo_ID = drv["todo_id"].ToString();
+                todoToEdit.Todo_Title = drv["todo_title"].ToString();
+                todoToEdit.Todo_Body = drv["todo_body"].ToString();
+                todoToEdit.Todo_Author = drv["todo_author"].ToString();
+                todoToEdit.Todo_Deadline = drv["todo_deadline"].ToString();
+                todoToEdit.Todo_Priority = (Priority)Enum.Parse(typeof(Priority), drv["todo_priority"].ToString().ToUpper());
 
-                EditTodo editTodo = new EditTodo(this,id,title,body,author,deadline,priority);
+                EditTodo editTodo = new EditTodo(this, todoToEdit);
                 editTodo.Show();
             }
         }

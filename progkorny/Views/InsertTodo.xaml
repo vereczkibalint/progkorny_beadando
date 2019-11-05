@@ -10,13 +10,13 @@
     <Grid>
         <StackPanel Width="300">
             <Label Content="Title"/>
-            <TextBox x:Name="txtBox_Title" Height="20"/>
+            <TextBox x:Name="txtBox_Title" Height="20" MaxLength="255"/>
             
             <Label Content="Body" />
             <TextBox x:Name="txtBox_Body" Height="50"/>
             
             <Label Content="Author"/>
-            <TextBox x:Name="txtBox_Author" Height="20"/>
+            <TextBox x:Name="txtBox_Author" Height="20" MaxLength="50"/>
             
             <Label Content="Deadline" />
             <DatePicker Text="Date" Height="20" x:Name="dateDeadline"/>

@@ -88,7 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Colors.cs" />
+    <Compile Include="Assets\Colors.cs" />
+    <Compile Include="Assets\Priority.cs" />
+    <Compile Include="BusinessLogic\DatabaseConnection.cs" />
+    <Compile Include="Model\Todo.cs" />
     <Compile Include="Views\EditTodo.xaml.cs">
       <DependentUpon>EditTodo.xaml</DependentUpon>
     </Compile>
@@ -102,10 +105,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ThemeController.cs" />
-    <Compile Include="Themes.cs" />
-    <Compile Include="TodoController.cs" />
-    <Compile Include="TodoHelper.cs" />
+    <Compile Include="BusinessLogic\ThemeController.cs" />
+    <Compile Include="Assets\Themes.cs" />
+    <Compile Include="BusinessLogic\TodoController.cs" />
+    <Compile Include="Helpers\TodoHelper.cs" />
     <Page Include="Views\EditTodo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -181,5 +184,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

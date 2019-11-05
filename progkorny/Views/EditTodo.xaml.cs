@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 
@@ -24,7 +25,7 @@ namespace progkorny
         /// <param name="author">Todo Author</param>
         /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
-        public EditTodo(MainWindow mwindow, string id, string title, string body, string author, string deadline, string priority)
+        public EditTodo(MainWindow mwindow, Todo todoToEdit)
         {
             InitializeComponent();
             todoController = new TodoController();
@@ -35,23 +36,23 @@ namespace progkorny
 
             // Osztály mezőinek érték beállítása
             parentWindow = mwindow;
-            todo_id = id;
+            todo_id = todoToEdit.Todo_ID;
 
             // Az ablakon lévő TextBox-ok értékének beállítása
-            txtBox_Title.Text = title;
-            txtBox_Body.Text = body;
-            txtBox_Author.Text = author;
-            dateDeadline.Text = deadline;
+            txtBox_Title.Text = todoToEdit.Todo_Title;
+            txtBox_Body.Text = todoToEdit.Todo_Body;
+            txtBox_Author.Text = todoToEdit.Todo_Author;
+            dateDeadline.Text = todoToEdit.Todo_Deadline;
 
-            switch (priority)
+            switch (todoToEdit.Todo_Priority)
             {
-                case "normal":
+                case Priority.NORMAL:
                     cmbPriority.SelectedIndex = 0;
                     break;
-                case "important":
+                case Priority.IMPORTANT:
                     cmbPriority.SelectedIndex = 1;
                     break;
-                case "urgent":
+                case Priority.URGENT:
                     cmbPriority.SelectedIndex = 2;
                     break;
                 default:
@@ -68,15 +69,17 @@ namespace progkorny
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
             // A Todo adatai
-            string id = this.todo_id;
-            string title = txtBox_Title.Text;
-            string body = txtBox_Body.Text;
-            string author = txtBox_Author.Text;
-            string deadline = dateDeadline.Text;
-            string priority = cmbPriority.Text.ToLower();
+            Todo updatedTodo = new Todo();
+
+            updatedTodo.Todo_ID = this.todo_id;
+            updatedTodo.Todo_Title = txtBox_Title.Text;
+            updatedTodo.Todo_Body = txtBox_Body.Text;
+            updatedTodo.Todo_Author = txtBox_Author.Text;
+            updatedTodo.Todo_Deadline = dateDeadline.Text;
+            updatedTodo.Todo_Priority = (Priority)cmbPriority.SelectedIndex;
             
             // Az Update kísérlete
-            int updateResult = todoController.UpdateTodo(id,title,body,author,deadline,priority);
+            int updateResult = todoController.UpdateTodo(updatedTodo);
 
             // -1 - Sikertelen frissítés
             // 1 - Sikeres frissítés

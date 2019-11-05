@@ -46,36 +46,29 @@ namespace progkorny
         /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
         /// <returns>int: -1 - Failed, 1 - Success</returns>
-        public int InsertTodo(string title, string body, string author, string deadline, string priority)
+        public int InsertTodo(Todo insertTodo)
         {
-            if(!TodoHelper.IsEmptyOrNull(title, body, author, deadline, priority))
+            OleDbConnection dbConn = OpenConnection();
+            try
             {
-                OleDbConnection dbConn = OpenConnection();
-                try
-                {
-                    dbConn.Open();
-                    string query = "INSERT INTO [todos] (todo_title, todo_body, todo_author, todo_deadline, todo_priority) VALUES('" + title + "', '" + body + "','" + author + "', '" + deadline + "','" + priority + "')";
-                    OleDbCommand command = new OleDbCommand(query, dbConn);
+                dbConn.Open();
+                string query = "INSERT INTO [todos] (todo_title, todo_body, todo_author, todo_deadline, todo_priority) VALUES('" + insertTodo.Todo_Title + "', '" + insertTodo.Todo_Body + "','" + insertTodo.Todo_Author + "', '" + insertTodo.Todo_Deadline + "','" + insertTodo.Todo_Priority.ToString().ToLower() + "')";
 
-                    dataAdapter.InsertCommand = command;
-                    int result = dataAdapter.InsertCommand.ExecuteNonQuery();
+                OleDbCommand command = new OleDbCommand(query, dbConn);
 
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hiba: " + ex.Message);
-                    return -1;
-                }
-                finally
-                {
-                    dbConn.Close();
-                }
+                dataAdapter.InsertCommand = command;
+                int result = dataAdapter.InsertCommand.ExecuteNonQuery();
+
+                return result;
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Tölts ki minden mezőt!");
+                MessageBox.Show("Hiba: " + ex.Message);
                 return -1;
+            }
+            finally
+            {
+                dbConn.Close();
             }
         }
 
@@ -89,36 +82,28 @@ namespace progkorny
         /// <param name="deadline">Todo Deadline</param>
         /// <param name="priority">Todo Priority</param>
         /// <returns>int: -1 - Failed, 1 - Success</returns>
-        public int UpdateTodo(string id, string title, string body, string author, string deadline, string priority)
+        public int UpdateTodo(Todo updateTodo)
         {
-            if (!TodoHelper.IsEmptyOrNull(id, title, body, author, deadline, priority))
+            OleDbConnection dbConn = OpenConnection();
+            try
             {
-                OleDbConnection dbConn = OpenConnection();
-                try
-                {
-                    dbConn.Open();
-                    string query = "UPDATE [todos] SET todo_title = '" + title + "', todo_body = '" + body + "', todo_author = '" + author + "', todo_deadline = #" + deadline + "#, todo_priority = '" + priority + "' WHERE todo_id = " + id;
-                    OleDbCommand command = new OleDbCommand(query, dbConn);
+                dbConn.Open();
+                string query = "UPDATE [todos] SET todo_title = '" + updateTodo.Todo_Title + "', todo_body = '" + updateTodo.Todo_Body + "', todo_author = '" + updateTodo.Todo_Author + "', todo_deadline = #" + updateTodo.Todo_Deadline + "#, todo_priority = '" + updateTodo.Todo_Priority.ToString().ToLower() + "' WHERE todo_id = " + updateTodo.Todo_ID;
+                OleDbCommand command = new OleDbCommand(query, dbConn);
 
-                    dataAdapter.UpdateCommand = command;
-                    int result = dataAdapter.UpdateCommand.ExecuteNonQuery();
+                dataAdapter.UpdateCommand = command;
+                int result = dataAdapter.UpdateCommand.ExecuteNonQuery();
 
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hiba történt: " + ex.Message);
-                    return -1;
-                }
-                finally
-                {
-                    dbConn.Close();
-                }
+                return result;
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Tölts ki minden mezőt!");
+                MessageBox.Show("Hiba történt: " + ex.Message);
                 return -1;
+            }
+            finally
+            {
+                dbConn.Close();
             }
         }
 

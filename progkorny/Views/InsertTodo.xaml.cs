@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 
@@ -38,14 +39,15 @@ namespace progkorny
         private void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
             // Todo adatai
-            string title = txtBox_Title.Text;
-            string body = txtBox_Body.Text;
-            string author = txtBox_Author.Text;
-            string deadline = dateDeadline.Text;
-            string priority = cmbPriority.SelectedValue.ToString().ToLower();
+            Todo insertTodo = new Todo();
+            insertTodo.Todo_Title = txtBox_Title.Text;
+            insertTodo.Todo_Body = txtBox_Body.Text;
+            insertTodo.Todo_Author = txtBox_Author.Text;
+            insertTodo.Todo_Deadline = dateDeadline.Text;
+            insertTodo.Todo_Priority = (Priority)Enum.Parse(typeof(Priority), cmbPriority.SelectedValue.ToString().ToUpper());
 
             // Az insert kísérlete
-            int insertResult = todoController.InsertTodo(title,body,author,deadline,priority);
+            int insertResult = todoController.InsertTodo(insertTodo);
             // -1 - Sikertelen insert
             // 1 - Sikeres insert
 
