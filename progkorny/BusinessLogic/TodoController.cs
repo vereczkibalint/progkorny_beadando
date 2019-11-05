@@ -40,11 +40,7 @@ namespace progkorny
         /// <summary>
         /// Hozzáadja az adatbázishoz az új Todo-t, aminek adatai a paraméterekben érkeznek
         /// </summary>
-        /// <param name="title">Todo Title</param>
-        /// <param name="body">Todo Body</param>
-        /// <param name="author">Todo Author</param>
-        /// <param name="deadline">Todo Deadline</param>
-        /// <param name="priority">Todo Priority</param>
+        /// <param name="insertTodo">Todo objektum</param>
         /// <returns>int: -1 - Failed, 1 - Success</returns>
         public int InsertTodo(Todo insertTodo)
         {
@@ -75,12 +71,7 @@ namespace progkorny
         /// <summary>
         /// Frissíti a paraméterben kapott ID-jű Todo-t
         /// </summary>
-        /// <param name="id">Todo ID</param>
-        /// <param name="title">Todo Title</param>
-        /// <param name="body">Todo Body</param>
-        /// <param name="author">Todo Author</param>
-        /// <param name="deadline">Todo Deadline</param>
-        /// <param name="priority">Todo Priority</param>
+        /// <param name="updateTodo">Todo objektum</param>
         /// <returns>int: -1 - Failed, 1 - Success</returns>
         public int UpdateTodo(Todo updateTodo)
         {
