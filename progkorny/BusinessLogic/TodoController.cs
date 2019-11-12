@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Globalization;
 using System.Windows;
 
 namespace progkorny
@@ -29,7 +30,7 @@ namespace progkorny
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba történt: " + ex.Message);
+                MessageBox.Show("Hiba történt a betöltéskor: " + ex.Message);
             }
             finally
             {
@@ -59,7 +60,7 @@ namespace progkorny
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba: " + ex.Message);
+                MessageBox.Show("Hiba történt az adatfelvitelkor: " + ex.Message);
                 return -1;
             }
             finally
@@ -89,7 +90,7 @@ namespace progkorny
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba történt: " + ex.Message);
+                MessageBox.Show("Hiba történt a frissítéskor: " + ex.Message);
                 return -1;
             }
             finally
@@ -121,7 +122,7 @@ namespace progkorny
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hiba történt: " + ex.Message);
+                    MessageBox.Show("Hiba történt a törléskor: " + ex.Message);
                     return -1;
                 }
                 finally
@@ -165,7 +166,7 @@ namespace progkorny
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hiba történt: " + ex.Message);
+                MessageBox.Show("Hiba történt a dátumok betöltésekor: " + ex.Message);
                 return dates;
             }
             finally
