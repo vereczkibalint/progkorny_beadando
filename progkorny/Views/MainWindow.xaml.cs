@@ -21,6 +21,7 @@ namespace progkorny
         public MainWindow()
         {
             InitializeComponent();
+
             todoController = new TodoController();
             dt = new DataTable();
             dates = new List<string>();
@@ -35,7 +36,13 @@ namespace progkorny
             dt.Clear();
             todoController.LoadTodos(dt);
             dataGrid.DataContext = dt;
+            dates.Clear();
             dates = todoController.LoadDates();
+            foreach (string date in dates)
+            {
+                calendar.SelectedDates.Add(DateTime.Parse(date));
+            }
+            calendar.SelectedDate = DateTime.Today;
         }
 
         /// <summary>
@@ -48,6 +55,11 @@ namespace progkorny
             RefreshData();
         }
 
+        /// <summary>
+        /// Insert és Edit ablakok bezárásakor lefutó metódus, amely frissíti az adatokat.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closed_Refresh(object sender, EventArgs e)
         {
             RefreshData();
@@ -99,14 +111,6 @@ namespace progkorny
         }
 
         /// <summary>
-        /// A Calendarhoz készült metódus, amely csak a dátumokat tölti be, hogy azok megjelenítődhessenek a naptáron
-        /// </summary>
-        //private void LoadDates()
-        //{
-        //    dates = todoController.LoadDates();
-        //}
-
-        /// <summary>
         /// A színeket beállító ComboBox SelectionChanged metódusa, amely ha lefut, akkor a kiválasztott színűre vált az ablak témája
         /// </summary>
         /// <param name="sender"></param>
@@ -116,16 +120,16 @@ namespace progkorny
             switch (colorsComboBox.SelectedValue.ToString())
             {
                 case "kék":
-                    tc.ChangeColor(Colors.KEK);
-                    break;
-                case "lila":
-                    tc.ChangeColor(Colors.LILA);
+                    tc.ChangeColor(Colors.BLUE);
                     break;
                 case "narancssárga":
-                    tc.ChangeColor(Colors.NARANCSSARGA);
+                    tc.ChangeColor(Colors.ORANGE);
+                    break;
+                case "lila":
+                    tc.ChangeColor(Colors.PURPLE);
                     break;
                 case "barna":
-                    tc.ChangeColor(Colors.BARNA);
+                    tc.ChangeColor(Colors.BROWN);
                     break;
             }
         }
@@ -162,13 +166,13 @@ namespace progkorny
         /// <param name="e"></param>
         private void ViewModeCalendar_Checked(object sender, RoutedEventArgs e)
         {
-            dataGrid.Visibility = Visibility.Hidden;
-            calendar.Visibility = Visibility.Visible;
             RefreshData();
             foreach (string date in dates)
             {
                 calendar.SelectedDates.Add(DateTime.Parse(date));
             }
+            dataGrid.Visibility = Visibility.Hidden;
+            calendar.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -207,10 +211,6 @@ namespace progkorny
         private void RefreshTodoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             RefreshData();
-            foreach (string date in dates)
-            {
-                calendar.SelectedDates.Add(DateTime.Parse(date));
-            }
         }
     }
 }
