@@ -43,16 +43,16 @@ namespace progkorny
             // Színekhez tartozó xaml stílusok betöltése
             switch (color)
             {
-                case Colors.KEK:
+                case Colors.BLUE:
                     newColor = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml");
                     break;
-                case Colors.NARANCSSARGA:
+                case Colors.ORANGE:
                     newColor = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml");
                     break;
-                case Colors.LILA:
+                case Colors.PURPLE:
                     newColor = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Purple.xaml");
                     break;
-                case Colors.BARNA:
+                case Colors.BROWN:
                     newColor = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Brown.xaml");
                     break;
                 default:
