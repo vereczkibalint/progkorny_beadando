@@ -66,29 +66,36 @@ namespace progkorny
         /// <param name="e"></param>
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-            // A Todo adatai
-            Todo updatedTodo = new Todo();
-
-            updatedTodo.Todo_ID = this.todo_id;
-            updatedTodo.Todo_Title = txtBox_Title.Text;
-            updatedTodo.Todo_Body = txtBox_Body.Text;
-            updatedTodo.Todo_Author = txtBox_Author.Text;
-            updatedTodo.Todo_Deadline = dateDeadline.Text;
-            updatedTodo.Todo_Priority = (Priority)cmbPriority.SelectedIndex;
-            
-            // Az Update kísérlete
-            int updateResult = todoController.UpdateTodo(updatedTodo);
-
-            // -1 - Sikertelen frissítés
-            // 1 - Sikeres frissítés
-            if(updateResult == 1)
+            if(!TodoHelper.IsEmptyOrNull(txtBox_Title.Text, txtBox_Body.Text, txtBox_Author.Text))
             {
-                this.Close();
+                // A Todo adatai
+                Todo updatedTodo = new Todo();
+
+                updatedTodo.Todo_ID = this.todo_id;
+                updatedTodo.Todo_Title = txtBox_Title.Text;
+                updatedTodo.Todo_Body = txtBox_Body.Text;
+                updatedTodo.Todo_Author = txtBox_Author.Text;
+                updatedTodo.Todo_Deadline = dateDeadline.Text;
+                updatedTodo.Todo_Priority = (Priority)cmbPriority.SelectedIndex;
+
+                // Az Update kísérlete
+                int updateResult = todoController.UpdateTodo(updatedTodo);
+
+                // -1 - Sikertelen frissítés
+                // 1 - Sikeres frissítés
+                if (updateResult == 1)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Hiba történt az adatfrissítés közben!");
+                }
             }
             else
             {
-                MessageBox.Show("Hiba történt az adatfrissítés közben!");
-            }
+                MessageBox.Show("Tölts ki minden mezőt!");
+            }            
         }
 
         /// <summary>
