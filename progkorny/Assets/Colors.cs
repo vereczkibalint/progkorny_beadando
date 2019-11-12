@@ -2,9 +2,9 @@
 {
     public enum Colors
     {
-        KEK,
-        NARANCSSARGA,
-        LILA,
-        BARNA
+        BLUE,
+        ORANGE,
+        PURPLE,
+        BROWN
     }
 }
